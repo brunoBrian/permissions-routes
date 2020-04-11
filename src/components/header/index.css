@@ -1,0 +1,30 @@
+.header {
+    background-color: #61dafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-nav {
+    max-width: 960px;
+}
+
+.header-list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.header-list li {
+    margin: 0 20px;
+    padding: 20px 0;
+}
+
+.header-list li a {
+    text-decoration: none;
+    color: #282c34;
+}
