@@ -3,22 +3,19 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
-  useHistory,
-  useLocation
 } from "react-router-dom";
 import Home from '../pages/Home';
 import ProtectAdmin from '../pages/ProtectAdmin';
 import ProtectManager from '../pages/ProtectManager';
 import ProtectOwner from '../pages/ProtectOwner';
 import PublicPage from '../pages/PublicPage';
+import Login from '../pages/Login';
 
 import Header from '../components/header';
 import {getProfileRequiredRoute} from '../utils/routes';
 
-export default function AuthExample() {
-  const userProfile = 'owner';
+export default function AuthExample(props) {
 
   return (
     <Router>
@@ -30,13 +27,16 @@ export default function AuthExample() {
         <Route path="/public">
           <PublicPage />
         </Route>
-        <PrivateRoute path="/protected-owner" userProfile={userProfile} userProfileRequired={getProfileRequiredRoute('owner')}>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <PrivateRoute path="/protected-owner" userProfileRequired={getProfileRequiredRoute('owner')}>
           <ProtectOwner />
         </PrivateRoute>
-        <PrivateRoute path="/protected-manager" userProfile={userProfile} userProfileRequired={getProfileRequiredRoute('manager')}>
+        <PrivateRoute path="/protected-manager" userProfileRequired={getProfileRequiredRoute('manager')}>
           <ProtectManager />
         </PrivateRoute>
-        <PrivateRoute path="/protected-admin" userProfile={userProfile} userProfileRequired={getProfileRequiredRoute('admin')}>
+        <PrivateRoute path="/protected-admin" userProfileRequired={getProfileRequiredRoute('admin')}>
           <ProtectAdmin />
         </PrivateRoute>
       </Switch>
@@ -44,22 +44,35 @@ export default function AuthExample() {
   );
 }
 
-function PrivateRoute({ children, userProfile, userProfileRequired, ...rest }) {
+function PrivateRoute({ children, userProfileRequired, ...rest }) {
+  const userData = localStorage.getItem('userData');
+  const userDataParsed = JSON.parse(userData);
+  const userProfile = userDataParsed ? userDataParsed[0].profile : '';
+  
   const havePermission = userProfileRequired.includes(userProfile);
 
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        havePermission ? (
+        havePermission && userDataParsed ? (
           children
         ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { from: location }
-            }}
-          />
+          userDataParsed ? (
+            <Redirect
+              to={{
+                pathname: "/",
+                state: { from: location }
+              }}
+            /> 
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location }
+              }}
+            /> 
+          )
         )
       }
     />

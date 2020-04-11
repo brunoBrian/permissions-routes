@@ -1,11 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
-  Link
+  Link,
+  Redirect,
+  useHistory
 } from "react-router-dom";
 
 import './index.css';
 
 export default function Header(props) {
+  const userData = localStorage.getItem('userData');
+  const userDataParsed = JSON.parse(userData);
+  let history = useHistory();
+
+  const logout = () => {
+    history.push("/login");
+    localStorage.removeItem('userData');
+  }
+
   return (
     <header className='header'>
       <nav className='header-nav'>
@@ -25,6 +36,11 @@ export default function Header(props) {
           <li>
             <Link to="/protected-owner">Protected Page Owner</Link>
           </li>
+          {userDataParsed &&
+            <li>
+              <button onClick={logout}>Logout</button>
+            </li>
+          }
         </ul>
       </nav>
     </header>
