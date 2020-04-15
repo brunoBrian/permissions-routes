@@ -47,7 +47,7 @@ export default function AuthExample(props) {
 function PrivateRoute({ children, userProfileRequired, ...rest }) {
   const userData = localStorage.getItem('userData');
   const userDataParsed = JSON.parse(userData);
-  const userProfile = userDataParsed ? userDataParsed[0].profile : '';
+  const userProfile = userDataParsed ? userDataParsed.userData[0].profile : '';
   
   const havePermission = userProfileRequired.includes(userProfile);
 

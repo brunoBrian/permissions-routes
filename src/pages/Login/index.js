@@ -10,7 +10,7 @@ function App() {
   const getUser = e => {
     e.preventDefault();
 
-    fetch(`http://localhost:3000/login?user=${userName}&password=${password}`).then(response => {
+    fetch(`http://localhost:3333/authenticate?user=${userName}&password=${password}`).then(response => {
       return response.json();
     }).then(data => {
       if(!data.error) {
