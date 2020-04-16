@@ -15,32 +15,36 @@ import Login from '../pages/Login';
 import Header from '../components/header';
 import {getProfileRequiredRoute} from '../utils/routes';
 
+import { ThemeProvider } from '../Context/theme/ThemeContext';
+
 export default function AuthExample(props) {
 
   return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/public">
-          <PublicPage />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <PrivateRoute path="/protected-owner" userProfileRequired={getProfileRequiredRoute('owner')}>
-          <ProtectOwner />
-        </PrivateRoute>
-        <PrivateRoute path="/protected-manager" userProfileRequired={getProfileRequiredRoute('manager')}>
-          <ProtectManager />
-        </PrivateRoute>
-        <PrivateRoute path="/protected-admin" userProfileRequired={getProfileRequiredRoute('admin')}>
-          <ProtectAdmin />
-        </PrivateRoute>
-      </Switch>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/public">
+            <PublicPage />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <PrivateRoute path="/protected-owner" userProfileRequired={getProfileRequiredRoute('owner')}>
+            <ProtectOwner />
+          </PrivateRoute>
+          <PrivateRoute path="/protected-manager" userProfileRequired={getProfileRequiredRoute('manager')}>
+            <ProtectManager />
+          </PrivateRoute>
+          <PrivateRoute path="/protected-admin" userProfileRequired={getProfileRequiredRoute('admin')}>
+            <ProtectAdmin />
+          </PrivateRoute>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -1,5 +1,4 @@
 .header {
-    background-color: #61dafb;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,5 +25,4 @@
 
 .header-list li a {
     text-decoration: none;
-    color: #282c34;
 }
